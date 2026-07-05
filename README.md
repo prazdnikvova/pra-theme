@@ -6,6 +6,8 @@ A lean, opinionated WordPress starter theme — the distilled result of shipping
 and optimizing real client sites (see the [pbt case study](https://github.com/prazdnikvova/pbt)).
 Small enough to read in one sitting, complete enough that performance,
 security, i18n and CI are solved before you write your first line of project code.
+Want it even barer — PHP only, zero tooling? See the sibling:
+[pra-theme-clean](https://github.com/prazdnikvova/pra-theme-clean).
 
 *Українська версія — [нижче](#pra-theme--українською).*
 
@@ -75,6 +77,8 @@ GNU General Public License v3 or later.
 досвіду реальних клієнтських проєктів (див. [кейс pbt](https://github.com/prazdnikvova/pbt)).
 Достатньо мала, щоб прочитати за один підхід; достатньо повна, щоб
 продуктивність, безпека, i18n і CI були вирішені ще до першого рядка коду проєкту.
+Треба ще голіше — тільки PHP, нуль тулінгу? Дивись брата:
+[pra-theme-clean](https://github.com/prazdnikvova/pra-theme-clean).
 
 ## Що всередині
 
