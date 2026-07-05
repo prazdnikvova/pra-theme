@@ -1,0 +1,18 @@
+/*
+Theme Name: Pra Theme
+Theme URI: https://github.com/prazdnikvova/pra-theme
+Author: Volodymyr Prazdnikov
+Author URI: https://www.linkedin.com/in/volodymyr-prazdnikov-2516451ab/
+Description: A lean, opinionated WordPress starter theme: clean template hierarchy, deferred JS with filemtime cache busting, security hardening out of the box, i18n-ready, with PHPCS + CI + a Playwright smoke test included. Based on BlankSlate (GPL).
+Version: 0.1.0
+Requires at least: 6.0
+Tested up to: 7.0
+Requires PHP: 8.0
+License: GNU General Public License v3 or Later
+License URI: https://www.gnu.org/licenses/gpl.html
+Text Domain: pra-theme
+Tags: one-column, custom-menu, featured-images, threaded-comments, translation-ready, accessibility-ready
+
+This file intentionally contains only the theme header.
+Styles live in assets/css/theme.css (enqueued with a filemtime version).
+*/
