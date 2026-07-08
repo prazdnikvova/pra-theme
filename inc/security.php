@@ -10,6 +10,9 @@
 /**
  * 1. REST: /wp-json/wp/v2/users* for logged-in users only.
  * Anonymous requests get a 404 (rest_no_route), as if the route didn't exist.
+ *
+ * @param array $endpoints Registered REST routes, keyed by route.
+ * @return array Routes without /wp/v2/users* for anonymous requests.
  */
 add_filter( 'rest_endpoints', 'pra_close_rest_users' );
 function pra_close_rest_users( $endpoints ) {
@@ -27,6 +30,8 @@ function pra_close_rest_users( $endpoints ) {
 /**
  * 2. Author enumeration: ?author=N and /author/<login>/ return 404.
  * Remove this block if your project actually uses author archives.
+ *
+ * @return void
  */
 add_action( 'template_redirect', 'pra_block_author_pages', 0 );
 function pra_block_author_pages() {
@@ -39,7 +44,12 @@ function pra_block_author_pages() {
 	}
 }
 
-// Keep the canonical redirect from turning ?author=N into /author/<login>/.
+/**
+ * Keep the canonical redirect from turning ?author=N into /author/<login>/.
+ *
+ * @param string|false $redirect_url Redirect target proposed by core.
+ * @return string|false False to cancel the redirect for author URLs.
+ */
 add_filter( 'redirect_canonical', 'pra_no_author_canonical' );
 function pra_no_author_canonical( $redirect_url ) {
 	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- only detecting an enumeration attempt, not processing a form
@@ -49,7 +59,13 @@ function pra_no_author_canonical( $redirect_url ) {
 	return $redirect_url;
 }
 
-// Drop user logins from the core sitemap as well.
+/**
+ * Drop user logins from the core sitemap as well.
+ *
+ * @param WP_Sitemaps_Provider $provider Sitemap provider instance.
+ * @param string               $name     Provider name.
+ * @return WP_Sitemaps_Provider|false False for the users provider.
+ */
 add_filter( 'wp_sitemaps_add_provider', 'pra_drop_users_sitemap', 10, 2 );
 function pra_drop_users_sitemap( $provider, $name ) {
 	return 'users' === $name ? false : $provider;
@@ -59,6 +75,8 @@ function pra_drop_users_sitemap( $provider, $name ) {
  * 3. Security headers.
  * CSP is deliberately absent — roll it out via Report-Only with monitoring.
  * HSTS: one year, no includeSubDomains (inventory your subdomains first).
+ *
+ * @return void
  */
 add_action( 'send_headers', 'pra_security_headers' );
 function pra_security_headers() {
