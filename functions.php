@@ -3,6 +3,11 @@
  * Pra Theme — setup, asset loading, includes.
  */
 
+/**
+ * Theme supports, text domain and menu locations.
+ *
+ * @return void
+ */
 add_action( 'after_setup_theme', 'pra_setup' );
 function pra_setup() {
 	load_theme_textdomain( 'pra-theme', get_template_directory() . '/languages' );
@@ -23,6 +28,10 @@ function pra_setup() {
 /**
  * Asset version from the file's mtime — editing a file busts the browser
  * cache automatically, nothing is ever bumped by hand.
+ *
+ * @param string $relative_path Path from the theme root, starting with a slash.
+ * @return string|null Modification time, or null when the file is missing
+ *                     (the asset URL then gets no version query string).
  */
 function pra_asset_version( $relative_path ) {
 	$file = get_template_directory() . $relative_path;
@@ -34,6 +43,8 @@ function pra_asset_version( $relative_path ) {
  * assets/css/theme.css. JS loads from the footer with defer — never
  * render-blocking. Register per-feature scripts/styles here and enqueue them
  * only where used (see README: scoped assets pattern).
+ *
+ * @return void
  */
 add_action( 'wp_enqueue_scripts', 'pra_enqueue_assets' );
 function pra_enqueue_assets() {
@@ -59,6 +70,10 @@ function pra_enqueue_assets() {
 
 /**
  * Accessibility: skip link straight after <body>.
+ *
+ * Hooked at priority 5 so it is the first focusable element on the page.
+ *
+ * @return void
  */
 add_action( 'wp_body_open', 'pra_skip_link', 5 );
 function pra_skip_link() {
@@ -67,6 +82,10 @@ function pra_skip_link() {
 
 /**
  * Keep "read more" links meaningful for screen readers.
+ *
+ * Used for the <!--more--> tag in post content.
+ *
+ * @return string Link markup; empty in the admin.
  */
 add_filter( 'the_content_more_link', 'pra_read_more_link' );
 function pra_read_more_link() {
@@ -77,6 +96,12 @@ function pra_read_more_link() {
 	return ' <a href="' . esc_url( get_permalink() ) . '" class="more-link">' . sprintf( __( '&hellip;%s', 'pra-theme' ), '<span class="screen-reader-text"> ' . esc_html( get_the_title() ) . '</span>' ) . '</a>';
 }
 
+/**
+ * Same accessible "read more" link for automatic excerpts.
+ *
+ * @param string $more Default excerpt suffix.
+ * @return string Link markup; the default suffix in the admin.
+ */
 add_filter( 'excerpt_more', 'pra_excerpt_read_more_link' );
 function pra_excerpt_read_more_link( $more ) {
 	if ( is_admin() ) {
