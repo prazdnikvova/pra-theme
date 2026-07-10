@@ -32,6 +32,25 @@ Want it even barer — PHP only, zero tooling? See the sibling:
   sanitization, nonces, prepared SQL, i18n correctness), GitHub Actions CI
   (php -l on PHP 8.2/8.3 + PHPCS), and a 13-check Playwright smoke test.
 
+## Structure
+
+| Path | What it does |
+|---|---|
+| `style.css` | Theme header only (name, version, text domain) — no styles |
+| `functions.php` | Theme supports, menu location, asset loading with `filemtime()` versions, skip link, accessible "read more" links |
+| `inc/security.php` | Hardening: REST users route, author enumeration, security headers, generator tag |
+| `header.php`, `footer.php` | Document shell: `<head>`, logo and primary menu, `main#content`, copyright line |
+| `index.php`, `archive.php`, `search.php` | Lists: blog home, every archive type, search results with an empty state |
+| `single.php`, `page.php`, `404.php` | Single post, static page, not-found page with a search form |
+| `entry.php` | Post partial: title, then `entry-meta.php` (date, author), `entry-content.php` or `entry-summary.php`, `entry-footer.php` (categories, tags) |
+| `nav-below.php`, `nav-below-single.php` | Pagination for lists, previous/next links for posts |
+| `comments.php` | Comment list and form |
+| `assets/css/theme.css`, `assets/js/main.js` | Real styles and the deferred script |
+| `languages/pra-theme.pot` | Translation template |
+| `phpcs.xml`, `composer.json` | PHPCS ruleset and its dev dependencies |
+| `tests/` | Playwright smoke test (`js-smoke.mjs`) |
+| `.github/workflows/ci.yml` | CI: `php -l` and PHPCS |
+
 ## Quick start
 
 1. Copy the theme into `wp-content/themes/`, rename the folder to your slug.
@@ -42,6 +61,10 @@ Want it even barer — PHP only, zero tooling? See the sibling:
    `pra_enqueue_assets()` and enqueue them only where used — the pattern scales
    from a landing page to a catalog (see the pbt case study for the block-scoped
    version of the same idea).
+4. Regenerate `languages/pra-theme.pot` under the new text domain once the
+   strings settle, or delete it until then.
+5. Run the checks below before the first deploy; CI repeats `php -l` and PHPCS
+   on every push to `main` and every pull request.
 
 ## Checks
 
@@ -100,6 +123,25 @@ GNU General Public License v3 or later.
   санітизація вводу, nonce, prepared SQL, коректність i18n), CI на GitHub
   Actions (php -l на PHP 8.2/8.3 + PHPCS) і Playwright-смоук на 13 чеків.
 
+## Структура
+
+| Шлях | Що робить |
+|---|---|
+| `style.css` | Лише шапка теми (назва, версія, text domain), без стилів |
+| `functions.php` | Підтримка можливостей теми, локація меню, підключення асетів з версіями з `filemtime()`, skip link, доступні лінки «читати далі» |
+| `inc/security.php` | Захист: REST-маршрут користувачів, перебір авторів, security-заголовки, тег generator |
+| `header.php`, `footer.php` | Каркас документа: `<head>`, логотип і головне меню, `main#content`, рядок копірайту |
+| `index.php`, `archive.php`, `search.php` | Списки: головна блогу, усі типи архівів, результати пошуку з порожнім станом |
+| `single.php`, `page.php`, `404.php` | Запис, статична сторінка, сторінка 404 з формою пошуку |
+| `entry.php` | Партіал запису: заголовок, далі `entry-meta.php` (дата, автор), `entry-content.php` або `entry-summary.php`, `entry-footer.php` (рубрики, мітки) |
+| `nav-below.php`, `nav-below-single.php` | Пагінація списків, лінки «попередній / наступний» для записів |
+| `comments.php` | Список і форма коментарів |
+| `assets/css/theme.css`, `assets/js/main.js` | Реальні стилі й відкладений скрипт |
+| `languages/pra-theme.pot` | Шаблон перекладу |
+| `phpcs.xml`, `composer.json` | Набір правил PHPCS і його dev-залежності |
+| `tests/` | Playwright-смоук (`js-smoke.mjs`) |
+| `.github/workflows/ci.yml` | CI: `php -l` і PHPCS |
+
 ## Швидкий старт
 
 1. Скопіюй тему в `wp-content/themes/`, перейменуй теку на свій слаг.
@@ -109,6 +151,10 @@ GNU General Public License v3 or later.
 3. Активуй і будуй. Скрипти/стилі фіч реєструй у `pra_enqueue_assets()` і
    вмикай лише там, де вони використовуються — патерн масштабується від
    лендінга до каталогу (block-scoped версію цієї ж ідеї див. у кейсі pbt).
+4. Коли рядки усталяться, перегенеруй `languages/pra-theme.pot` під новий
+   text domain, а доти його можна просто видалити.
+5. Перед першим деплоєм запусти перевірки нижче; CI повторює `php -l` і PHPCS
+   на кожен пуш у `main` і кожен pull request.
 
 ## Перевірки
 
